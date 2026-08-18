@@ -1,0 +1,25 @@
+name: Bug report
+description: Report reproducible behavior with privacy-safe sample data
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Never attach private or production documents. Reduce the problem to a safe fixture.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Actual and expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal safe document
+      render: yaml
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Version and environment
