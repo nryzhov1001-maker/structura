@@ -33,9 +33,9 @@ This roadmap is ordered by user value, not promised dates.
 
 - [ ] Web Worker parser and cancellation
 - [ ] Virtualized tree and editor rendering
-- [ ] `@structura/core` package
-- [ ] `structura` CLI for stdin/stdout pipelines
-- [ ] Machine-readable diagnostics and exit codes
+- [x] `structura-workbench` package with typed core API
+- [x] `structura` CLI for stdin/stdout pipelines
+- [x] Machine-readable statistics and deterministic exit codes
 
 ## M4 — Format ecosystem
 

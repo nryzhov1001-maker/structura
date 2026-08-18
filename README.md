@@ -6,6 +6,8 @@ Structura converts, formats, validates and explores structured documents entirel
 
 **Live app:** [nryzhov1001-maker.github.io/structura](https://nryzhov1001-maker.github.io/structura/)
 
+**npm package:** `structura-workbench` · **CLI command:** `structura`
+
 > Project status: **functional early MVP.** The transform engine, workbench, tree explorer, file import/export and path query are usable today. Schema tooling and large-file workers are planned.
 
 ## What works
@@ -20,12 +22,41 @@ Structura converts, formats, validates and explores structured documents entirel
 - Local file import, clipboard copy and output download
 - Responsive, keyboard-friendly interface
 - Deterministic TypeScript core with unit tests
+- Reusable Node.js API and stdin/stdout-friendly CLI
 
 ## Privacy model
 
 Documents are parsed in the current browser tab. Structura does not send document contents to a server and does not include analytics. File import uses the browser `FileReader` API; downloads are generated locally with a `Blob` URL.
 
 ## Quick start
+
+### Command line
+
+Run without installing:
+
+```bash
+npx structura-workbench config.json --to yaml
+```
+
+Or install the `structura` command globally:
+
+```bash
+npm install --global structura-workbench
+structura config.yaml --to json --compact
+```
+
+It also works in pipelines and can validate, inspect or query documents:
+
+```bash
+cat config.yaml | structura --to json
+structura package.json --check
+structura data.yaml --stats
+structura data.json --query '$.users[0].name'
+```
+
+Use `structura --help` for the complete option list.
+
+### Web app development
 
 Requires Node.js 20 or newer.
 
@@ -45,15 +76,21 @@ npm run build
 
 ## Core API
 
-The current engine lives in `src/lib/document.ts` and deliberately has no React dependency:
+Install the package in a Node.js or TypeScript project:
 
-```ts
-const parsed = parseDocument(source, 'auto')
-const yaml = serializeDocument(parsed.data, 'yaml')
-const value = queryPath(parsed.data, '$.project.name')
+```bash
+npm install structura-workbench
 ```
 
-The next package boundary will extract this code into `@structura/core` for CLI and editor integrations.
+The core deliberately has no React dependency:
+
+```ts
+import { convertDocument, parseDocument, queryPath } from 'structura-workbench'
+
+const parsed = parseDocument(source, 'auto')
+const yaml = convertDocument(source, 'yaml')
+const value = queryPath(parsed.data, '$.project.name')
+```
 
 ## Direction
 
@@ -62,7 +99,7 @@ Structura aims to become a trustworthy structured-data toolkit rather than a col
 1. JSON Schema validation and schema inference
 2. Side-by-side semantic diff
 3. Streaming Web Worker parser for large files
-4. CLI with stdin/stdout pipelines
+4. Editor integrations built on the published core API
 5. Shareable plugin API for additional structured formats
 
 See [ROADMAP.md](ROADMAP.md) and [the architecture notes](docs/architecture.md).

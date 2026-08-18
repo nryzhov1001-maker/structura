@@ -53,6 +53,20 @@ export function formatDocument(source: string, format: InputFormat = 'auto'): st
   return serializeDocument(parsed.data, parsed.format)
 }
 
+export function convertDocument(
+  source: string,
+  target: DataFormat,
+  requested: InputFormat = 'auto',
+  compact = false,
+): string {
+  const parsed = parseDocument(source, requested)
+  return serializeDocument(parsed.data, target, compact)
+}
+
+export function validateDocument(source: string, requested: InputFormat = 'auto'): ParsedDocument {
+  return parseDocument(source, requested)
+}
+
 export function getDocumentStats(data: unknown, source: string): DocumentStats {
   let nodes = 0
   let keys = 0

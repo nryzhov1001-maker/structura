@@ -1,27 +1,73 @@
 {
-  "name": "structura",
-  "private": true,
+  "name": "structura-workbench",
   "version": "0.1.0",
+  "description": "Local-first JSON and YAML toolkit for browsers, Node.js and the command line.",
   "type": "module",
+  "license": "MIT",
+  "author": "NickBerg",
+  "homepage": "https://nryzhov1001-maker.github.io/structura/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nryzhov1001-maker/structura.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nryzhov1001-maker/structura/issues"
+  },
+  "keywords": [
+    "json",
+    "yaml",
+    "cli",
+    "formatter",
+    "converter",
+    "validator",
+    "jsonpath"
+  ],
+  "main": "./package-dist/index.cjs",
+  "module": "./package-dist/index.js",
+  "types": "./package-dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./package-dist/index.d.ts",
+      "import": "./package-dist/index.js",
+      "require": "./package-dist/index.cjs"
+    }
+  },
+  "bin": {
+    "structura": "./package-dist/cli.js"
+  },
+  "files": [
+    "package-dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run build:package && npm run build:web",
+    "build:package": "tsup && tsc -p tsconfig.package.json",
+    "build:web": "tsc -b && vite build",
     "preview": "vite preview --port 4174",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "pack:check": "npm pack --dry-run",
+    "prepublishOnly": "npm test && npm run build:package"
   },
   "dependencies": {
-    "lucide-react": "^1.31.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
+    "lucide-react": "^1.31.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tsup": "^8.5.1",
     "typescript": "^7.0.2",
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
   }
 }
